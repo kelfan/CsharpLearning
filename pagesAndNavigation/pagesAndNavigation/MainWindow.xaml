@@ -1,0 +1,12 @@
+﻿<Window x:Class="pagesAndNavigation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <StackPanel Orientation="Horizontal" Height="35" VerticalAlignment="Top">
+            <Button Content="Page1" MinWidth="100" Click="BtnClickP1"/>
+            <Button Content="Page2" MinWidth="100" Margin="10,0,0,0" Click="BtnClickP2" />
+        </StackPanel>
+        <Frame x:Name="Main" Margin="0,25,0,0" NavigationUIVisibility="Hidden"/>
+    </Grid>
+</Window>
