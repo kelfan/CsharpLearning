@@ -1,6 +1,9 @@
 # CsharpLearning
 
-## next  
+## bindComboBoxString
+[C# WPF Bind ComboBox from List of String type](https://www.youtube.com/watch?v=xOX-Zb8B6hU)
+
+## loadUserControl  
 [C# Tutorial - Dynamically Loading User Control | FoxLearn](https://www.youtube.com/watch?v=mECkft9LG4k)
 
 ## [userControl](https://www.youtube.com/watch?v=s49G6ph4XXA)
