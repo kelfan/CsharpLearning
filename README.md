@@ -1,5 +1,8 @@
 # CsharpLearning
 
+## dataBindingMode1
+[Data Binding Modes in WPF](https://www.youtube.com/watch?v=CniIPEFZ1Oo)
+
 ## bindComboBoxString
 [C# WPF Bind ComboBox from List of String type](https://www.youtube.com/watch?v=xOX-Zb8B6hU)
 
