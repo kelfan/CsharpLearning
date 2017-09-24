@@ -13,3 +13,6 @@ c:\users\chaofanz\documents\visual studio 2015\Projects\dersYoutube\dersYoutube\
 c:\users\chaofanz\documents\visual studio 2015\Projects\dersYoutube\dersYoutube\obj\Debug\dersYoutube.exe
 c:\users\chaofanz\documents\visual studio 2015\Projects\dersYoutube\dersYoutube\obj\Debug\dersYoutube.pdb
 c:\users\chaofanz\documents\visual studio 2015\Projects\dersYoutube\dersYoutube\obj\Debug\App.baml
+C:\Users\chaofanz\Desktop\git\CsharpLearning\dersYoutube\dersYoutube\bin\Debug\dersYoutube.exe.config
+C:\Users\chaofanz\Desktop\git\CsharpLearning\dersYoutube\dersYoutube\obj\Debug\dersYoutube.exe
+C:\Users\chaofanz\Desktop\git\CsharpLearning\dersYoutube\dersYoutube\obj\Debug\dersYoutube.pdb
