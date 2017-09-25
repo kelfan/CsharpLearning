@@ -76,5 +76,71 @@ private static MySqlConnection conn = null;
         }
 ```
 
+## ToList()
+## ComboBox
+	<ComboBox Name="combo1" SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding List}" SelectedValuePath="Id" DisplayMemberPath="Properity" />
 
-	
+```cs
+private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+{
+	var item = combo1.SelectedItem as Employee; 
+	MessageBox.Show(item.Emp_Name.ToString());
+}
+```
+## listBox 
+[# WPF学习笔记——ListBox用ItemsSource绑定数据源](http://blog.csdn.net/leftfist/article/details/25333425)
+```cs
+        protected class UserItem
+        {
+            public UserItem(int Id, string Name, bool IsActived)
+            {
+                this.Id = Id;
+                this.Name = Name;
+                this.IsActived = IsActived;
+            }
+            public int Id{get;set;}
+            public string Name { get; set; }
+            public bool IsActived { get; set; }
+            public string BackGround
+            {
+                get
+                {
+                    return IsActived
+                        ? "/test;component/Assets/Images/UserItemNull.png"
+                        : "/test;component/Assets/Images/UserItemNullg.png";
+                }
+            }
+        }
+        void Init()
+        {
+            Lst.ItemsSource = new List<UserItem> 
+            {
+                new UserItem(1,"张三",true)
+                ,new UserItem(2,"李四",true)
+                ,new UserItem(3,"赵五",true)
+                ,new UserItem(4,"钱六",true)
+                ,new UserItem(5,"孙七",false)
+                ,new UserItem(6,"李八",false)
+                ,new UserItem(7,"王九",false)
+                ,new UserItem(8,"陈十",false)
+                ,new UserItem(9,"吴万",false)
+                ,new UserItem(10,"刘十八",false)
+            };
+        }
+```
+```xml 
+<Grid>
+        <ListBox x:Name="Lst">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Button MouseDoubleClick="Button_MouseDoubleClick">
+                        <Grid>
+                            <Image Source="{Binding Path=BackGround}" />
+                            <TextBlock Text="{Binding Path=Name}" Margin="70 10" FontSize="18"></TextBlock>
+                        </Grid>
+                    </Button>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+</Grid>
+
+```
