@@ -1,0 +1,11 @@
+﻿<Window x:Class="mvvmSimpleImplement.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <TextBlock x:Name="bookTitle" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Title}" VerticalAlignment="Top"/>
+        <TextBlock x:Name="bookAuthor" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Author}" VerticalAlignment="Top" Margin="0,142,0,0"/>
+        <TextBlock x:Name="bookCategory" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Category}" VerticalAlignment="Top" Margin="0,242,0,0" />
+        <TextBlock x:Name="bookLanguage" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Language}" VerticalAlignment="Top" Margin="0,342,0,0" />
+    </Grid>
+</Window>
