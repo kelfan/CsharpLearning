@@ -9,15 +9,13 @@ namespace csharpDB.Data
 {
     class FreData
     {
-        List<Cell> cells = new List<Cell>();
-        Cell c = new Cell()
+        public static string filefolder = "C:/Users/chaofanz/Desktop/CsharpLearning/csharpDB/csharpDB/csharpDB/Data";
+                
+        static public List<Cell> getData()
         {
-            title = "hello",
-            content = "hhhhhhhhhhhhhh"
-        };
-        public List<Cell> getData()
-        {
-            cells.Add(c);
+            List<Cell> cells = new List<Cell>();
+            string mainfile = filefolder + "\\app.json";
+            cells = readfile.loadJson(mainfile);
             return cells;
         }
     }

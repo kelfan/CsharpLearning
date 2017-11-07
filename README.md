@@ -1,18 +1,18 @@
 # controls 控件
 https://msdn.microsoft.com/zh-cn/library/aa970268%28v=vs.100%29.aspx?f=255&MSPPError=-2147217396#Applications
-按钮：Button 和 RepeatButton。
-数据显示：DataGrid、ListView 和 TreeView。
-日期显示和选择：Calendar 和 DatePicker。
-对话框：OpenFileDialog、PrintDialog 和 SaveFileDialog。
-数字墨迹：InkCanvas 和 InkPresenter。
-文档：DocumentViewer、FlowDocumentPageViewer、FlowDocumentReader、FlowDocumentScrollViewer 和 StickyNoteControl。
-输入：TextBox、RichTextBox 和 PasswordBox。
-布局：Border、BulletDecorator、Canvas、DockPanel、Expander、Grid、GridView、GridSplitter、GroupBox、Panel、ResizeGrip、Separator、ScrollBar、ScrollViewer、StackPanel、Thumb、Viewbox、VirtualizingStackPanel、Window 和 WrapPanel。
-媒体：Image、MediaElement 和 SoundPlayerAction。
-菜单：ContextMenu、Menu 和 ToolBar。
-导航：Frame、Hyperlink、Page、NavigationWindow 和 TabControl。
-选择：CheckBox、ComboBox、ListBox、RadioButton 和 Slider。
-用户信息：AccessText、Label、Popup、ProgressBar、StatusBar、TextBlock 和 ToolTip。
+- 按钮：Button 和 RepeatButton。
+- 数据显示：DataGrid、ListView 和 TreeView。
+- 日期显示和选择：Calendar 和 DatePicker。
+- 对话框：OpenFileDialog、PrintDialog 和 SaveFileDialog。
+- 数字墨迹：InkCanvas 和 InkPresenter。
+- 文档：DocumentViewer、FlowDocumentPageViewer、FlowDocumentReader、FlowDocumentScrollViewer 和 StickyNoteControl。
+- 输入：TextBox、RichTextBox 和 PasswordBox。
+- 布局：Border、BulletDecorator、Canvas、DockPanel、Expander、Grid、GridView、GridSplitter、GroupBox、Panel、ResizeGrip、Separator、ScrollBar、ScrollViewer、StackPanel、Thumb、Viewbox、VirtualizingStackPanel、Window 和 WrapPanel。
+- 媒体：Image、MediaElement 和 SoundPlayerAction。
+- 菜单：ContextMenu、Menu 和 ToolBar。
+- 导航：Frame、Hyperlink、Page、NavigationWindow 和 TabControl。
+- 选择：CheckBox、ComboBox、ListBox、RadioButton 和 Slider。
+- 用户信息：AccessText、Label、Popup、ProgressBar、StatusBar、TextBlock 和 ToolTip。
 
 
 
@@ -57,7 +57,11 @@ private static MySqlConnection conn = null;
 
 ## ComboBox
 ```xml
-	<ComboBox Name="combo1" SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding List}" SelectedValuePath="Id" DisplayMemberPath="Properity" />
+	<ComboBox Name="combo1"
+    SelectionChanged="ComboBox_SelectionChanged"
+    ItemsSource="{Binding List}"
+    SelectedValuePath="Id"
+    DisplayMemberPath="Properity" />
 ```
 ```cs
 private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -121,6 +125,249 @@ private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs 
                 </DataTemplate>
             </ListBox.ItemTemplate>
 </Grid>
+```
+## JsonConvert
+JsonConvert is from the namespace Newtonsoft.Json, not System.ServiceModel.Web
+
+Use NuGet to download the package
+
+"Project" -> "Manage NuGet packages" -> "Search for "newtonsoft json". -> click "install".
+
+```cs
+public void LoadJson()
+{
+    using (StreamReader r = new StreamReader("file.json"))
+    {
+        string json = r.ReadToEnd();
+        List<Item> items = JsonConvert.DeserializeObject<List<Item>>(json);
+    }
+}
+
+public class Item
+{
+    public int millis;
+    public string stamp;
+    public DateTime datetime;
+    public string light;
+    public float temp;
+    public float vcc;
+}
+```
+You can even get the values dynamically without declaring Item class.
+```cs
+dynamic array = JsonConvert.DeserializeObject(json);
+foreach(var item in array)
+{
+    Console.WriteLine("{0} {1}", item.temp, item.vcc);
+}
+```
+
+## configuration
+- Add an Application Configuration File item to your project (right click project > add item). This will create a file called app.config in your project.
+- Edit the file by adding entries like `<add key="keyname" value="someValue" /> within the <appSettings>` tag.
+- Add a reference to the System.Configuration dll, and reference the items in the config using code like `ConfigurationManager.AppSettings["keyname"]`
+
+```cs
+Configuration configManager = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+KeyValueConfigurationCollection confCollection = configManager.AppSettings.Settings;
+
+confCollection["YourKey"].Value = "YourNewKey";
+
+configManager.Save(ConfigurationSaveMode.Modified);
+ConfigurationManager.RefreshSection(configManager.AppSettings.SectionInformation.Name);
+```
+
+## wpf open folders dialog
+- add a reference to `System.Windows.Forms.dll`.
+- `using System.Windows.Forms;``
+
+```cs
+using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+{
+    System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+}
+```
+
+## MVVM + WinForms FolderBrowserDialog as behavior
+```cs
+public class FolderDialogBehavior : Behavior<Button>
+{
+    public string SetterName { get; set; }
+
+    protected override void OnAttached()
+    {
+        base.OnAttached();
+        AssociatedObject.Click += OnClick;
+    }
+
+    protected override void OnDetaching()
+    {
+        AssociatedObject.Click -= OnClick;
+    }
+
+    private void OnClick(object sender, RoutedEventArgs e)
+    {
+        var dialog = new FolderBrowserDialog();
+        var result = dialog.ShowDialog();
+        if (result == DialogResult.OK && AssociatedObject.DataContext != null)
+        {
+            var propertyInfo = AssociatedObject.DataContext.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public)
+            .Where(p => p.CanRead && p.CanWrite)
+            .Where(p => p.Name.Equals(SetterName))
+            .First();
+
+            propertyInfo.SetValue(AssociatedObject.DataContext, dialog.SelectedPath, null);
+        }
+    }
+}
+```
+```xml
+<Button Grid.Column="3" Content="...">
+       <Interactivity:Interaction.Behaviors>
+           <Behavior:FolderDialogBehavior SetterName="SomeFolderPathPropertyName"/>
+       </Interactivity:Interaction.Behaviors>
+</Button>
+```
+
+## wpf listbox/listview SelectionChanged 'System.IndexOutOfRangeException'
+```cs
+if (this.publicationListView.SelectedItem != null) { }
+```
+
+## Multiline for WPF TextBox
+Enable `TextWrapping="Wrap"` and `AcceptsReturn="True"` on your TextBox.
+You might also wish to `enable AcceptsTab` and `SpellCheck.IsEnabled` too.
+
+## EASY way to refresh ListBox in WPF?
+myListBox.Items.Refresh();
+
+## simplest MVVM
+MyModel.cs
+```cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel;
+
+namespace WpfApplication1
+{
+    public class MyModel: INotifyPropertyChanged
+    {
+        private string _name;
+        private string _companyName;
+
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value;  NotifyPropertyChanged("Name"); }
+        }
+
+        public string CompanyName
+        {
+            get { return _companyName; }
+            set { _companyName = value; NotifyPropertyChanged("CompanyName"); }
+        }
+
+        public string DisplayMember
+        {
+            get { return string.Format("{0} ({1})", Name, CompanyName); }
+
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+                PropertyChanged(this, new PropertyChangedEventArgs("DisplayMember"));
+            }
+        }
+    }
+}
+```
+MainWindow.XMAL.cs
+```cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
+
+/// https://stackoverflow.com/questions/14096414/easy-way-to-refresh-listbox-in-wpf
+namespace WpfApplication1
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window, INotifyPropertyChanged
+    {
+        private ObservableCollection<MyModel> _list = new ObservableCollection<MyModel>();
+        private MyModel _selectedModel;
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            List.Add(new MyModel { Name = "James", CompanyName = "StackOverflow" });
+            List.Add(new MyModel { Name = "Adam", CompanyName = "StackOverflow" });
+            List.Add(new MyModel { Name = "Chris", CompanyName = "StackOverflow" });
+            List.Add(new MyModel { Name = "Steve", CompanyName = "StackOverflow" });
+            List.Add(new MyModel { Name = "Brent", CompanyName = "StackOverflow" });
+        }
+
+        public ObservableCollection<MyModel> List
+        {
+            get { return _list; }
+            set { _list = value; }
+        }
+
+        public MyModel SelectedModel
+        {
+            get { return _selectedModel; }
+            set { _selectedModel = value; NotifyPropertyChanged("SelectedModel"); }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
+        }
+    }
+}
+```
+
+XAML
+```xml
+<Window x:Class="WpfApplication11.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525" Name="UI">
+    <Grid>
+        <ListBox ItemsSource="{Binding ElementName=UI, Path=List}" SelectedItem="{Binding ElementName=UI, Path=SelectedModel}" Margin="0,0,200,0" DisplayMemberPath="DisplayMember" SelectedIndex="0" />
+        <StackPanel HorizontalAlignment="Left" Height="100" Margin="322,10,0,0" VerticalAlignment="Top" Width="185">
+            <TextBlock Text="Name" />
+            <TextBox Height="23" TextWrapping="Wrap" Text="{Binding ElementName=UI, Path=SelectedModel.Name, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Company Name" />
+            <TextBox Height="23" TextWrapping="Wrap" Text="{Binding ElementName=UI, Path=SelectedModel.CompanyName, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+    </Grid>
+</Window>
 ```
 
 # Resources

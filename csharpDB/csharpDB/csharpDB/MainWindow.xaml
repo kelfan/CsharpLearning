@@ -4,20 +4,21 @@
         Title="MainWindow" Height="350" Width="525">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
             <RowDefinition Height="auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <StackPanel x:Name="inputflow" Orientation="Vertical" Grid.Row="0">
-            <TextBox Text="{Binding title}"/>
-            <RichTextBox MinHeight="80">
-                <FlowDocument PageHeight="180">
-                    <Paragraph>
-                        <Run Text="{Binding content}"/>
-                    </Paragraph>
-                </FlowDocument>
-            </RichTextBox>
+        <StackPanel Orientation="Horizontal">
+            <Button Name="openBtn" Content="open" Margin="5" Click="Button_Click"/>
+            <Button Name="addBtn" Content="add" Margin="5" Click="addBtn_Click" />
+            <Button Name="deleteBtn" Content="delete" Margin="5" />
         </StackPanel>
-        <ListBox ItemsSource="{Binding Source={StaticResource allFredata}}" Grid.Row="1" SelectionChanged="ListBox_SelectionChanged">
+        
+        <StackPanel x:Name="inputflow" Orientation="Vertical" Grid.Row="1">
+            <TextBox x:Name="titleInput" Text="{Binding title}"/>
+            <TextBox x:Name="contentInput" Text="{Binding content}" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" SpellCheck.IsEnabled="True" MinHeight="80" />
+        </StackPanel>
+        <ListBox x:Name="itemlist" Grid.Row="2" SelectionChanged="ListBox_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
