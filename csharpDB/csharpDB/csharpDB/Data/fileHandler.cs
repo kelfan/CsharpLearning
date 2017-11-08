@@ -9,16 +9,24 @@ using Newtonsoft.Json;
 
 namespace csharpDB.Data
 {
-    class readfile
+    class fileHandler
     {
         public static List<Cell> loadJson(string filename)
         {
-            using (StreamReader r = new StreamReader(filename))
+            try
             {
-                string json = r.ReadToEnd();
-                List<Cell> cells = JsonConvert.DeserializeObject<List<Cell>>(json);
-                return cells;
+                using (StreamReader r = new StreamReader(filename))
+                {
+                    string json = r.ReadToEnd();
+                    List<Cell> cells = JsonConvert.DeserializeObject<List<Cell>>(json);
+                    return cells;
+                }
             }
+            catch (JsonReaderException e)
+            {
+                System.Windows.MessageBox.Show("file is not found or not correct json format");
+            }
+            return new List<Cell>();
         }
 
         public static List<Cell> dynamicLoadJson(string filename)
@@ -37,6 +45,12 @@ namespace csharpDB.Data
                 }
             }
             return cells;
+        }
+
+        public static void saveJson(string filename, List<Cell> cells)
+        {
+            string json = JsonConvert.SerializeObject(cells.ToArray(), Formatting.Indented);
+            System.IO.File.WriteAllText(filename, json);
         }
     }
 }

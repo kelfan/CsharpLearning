@@ -12,6 +12,5 @@ namespace csharpDB.model
         public string content { get; set; }
         public DateTime created { get; set; }
         public DateTime updated { get; set; }
-        public string level { get; set; }
     }
 }

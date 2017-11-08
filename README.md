@@ -162,6 +162,15 @@ foreach(var item in array)
 }
 ```
 
+# save json file
+https://stackoverflow.com/questions/16921652/how-to-write-a-json-file-in-c
+```cs
+string json = JsonConvert.SerializeObject(_data.ToArray(), Formatting.Indented);
+string jsonData = JsonConvert.SerializeObject(responseData, Formatting.None);
+System.IO.File.WriteAllText(Server.MapPath("~/JsonData/jsondata.txt"), jsonData);
+System.IO.File.WriteAllText(@"D:\path.txt", json);
+```
+
 ## configuration
 - Add an Application Configuration File item to your project (right click project > add item). This will create a file called app.config in your project.
 - Edit the file by adding entries like `<add key="keyname" value="someValue" /> within the <appSettings>` tag.
