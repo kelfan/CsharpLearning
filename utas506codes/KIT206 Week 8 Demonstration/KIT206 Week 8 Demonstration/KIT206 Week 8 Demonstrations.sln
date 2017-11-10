@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleSandpit", "ConsoleSandpit\ConsoleSandpit.csproj", "{5F411C22-EE52-4667-AF7C-9BEC78CDA1FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRIS", "HRIS\HRIS.csproj", "{726EFF0F-80AD-409F-80AC-578CC7BE0C8C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F411C22-EE52-4667-AF7C-9BEC78CDA1FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F411C22-EE52-4667-AF7C-9BEC78CDA1FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F411C22-EE52-4667-AF7C-9BEC78CDA1FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F411C22-EE52-4667-AF7C-9BEC78CDA1FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{726EFF0F-80AD-409F-80AC-578CC7BE0C8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{726EFF0F-80AD-409F-80AC-578CC7BE0C8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{726EFF0F-80AD-409F-80AC-578CC7BE0C8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{726EFF0F-80AD-409F-80AC-578CC7BE0C8C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
