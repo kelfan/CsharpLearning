@@ -1,0 +1,40 @@
+﻿<Window x:Name="mainWindow" x:Class="RAP.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RAP"
+        mc:Ignorable="d"
+        Title="Research Assessment Program" Height="600" Width="800" MinHeight="550" MinWidth="700" ResizeMode="CanResizeWithGrip" Icon="Views/images/Rap.png" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <!--separate the whole windows into a 3*3 grid cells-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--the left top cell for inputing the logo and program name of the application-->
+        <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Background="{StaticResource themeBackgroud}">
+            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0">
+                <Image Source="Views/images/Logo.png" Height="50" Margin="5"/>
+                <Label Content="RAP" Foreground="White" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="40" />
+            </DockPanel>
+        </Border>
+
+        <!--the bar in the middle for separate the the logo bar from main contents-->
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Background="{StaticResource themeBackgroud}">
+        </Border>
+
+        <!--the bottom cells for the ResearcherListView to display all contents-->
+        <Border Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3">
+            <Frame x:Name="ResearcherListFrame" Grid.Column="0" NavigationUIVisibility="Hidden"/>
+        </Border>
+
+    </Grid>
+</Window>

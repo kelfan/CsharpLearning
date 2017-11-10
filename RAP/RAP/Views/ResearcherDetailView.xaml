@@ -1,0 +1,119 @@
+﻿<Page x:Class="RAP.Views.ResearcherDetailView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RAP.Views"
+      xmlns:ma="clr-namespace:RAP"
+      xmlns:uc="clr-namespace:RAP.Views.userControls"
+      mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="600"
+      Title="ResearcherDetailView" Visibility="Hidden" Height="auto" >
+
+    <Grid>
+        <!--hava a 4*5 grid to display contents-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="60*" />
+            <ColumnDefinition Width="92*" MinWidth="100"/>
+            <ColumnDefinition Width="300*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="156"/>
+            <RowDefinition Height="55" />
+            <RowDefinition Height="160" />
+            <RowDefinition Height="auto" MinHeight="60"/>
+            <RowDefinition Height="43*"  MinHeight="80"/>
+        </Grid.RowDefinitions>
+
+
+        <!--the left top labels for the researcher details-->
+        <DockPanel Grid.Row="0" Grid.Column="0">
+            <Label Content="Name:" DockPanel.Dock="Top" FontWeight="Bold"/>
+            <Label Content="Title:" DockPanel.Dock="Top" FontWeight="Bold"/>
+            <Label Content="Unit:" DockPanel.Dock="Top" FontWeight="Bold"/>
+            <Label Content="Campus:" DockPanel.Dock="Top" FontWeight="Bold"/>
+            <Label Content="Email:" DockPanel.Dock="Top" FontWeight="Bold"/>
+            <Label Content="Current job:" DockPanel.Dock="Top" FontWeight="Bold"/>
+        </DockPanel>
+
+        <!--the top middle labels for values of the researcher details-->
+        <DockPanel Grid.Row="0" Grid.Column="1">
+            <Label x:Name="nameLabel" DockPanel.Dock="Top">
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} {1}">
+                            <Binding Path="GivenName" />
+                            <Binding Path="FamilyName" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </Label>
+            <Label x:Name="titleLabel" Content="{Binding Path=Title}" DockPanel.Dock="Top"/>
+            <Label x:Name="unitLabel" Content="{Binding Path=Unit}" DockPanel.Dock="Top"/>
+            <Label x:Name="campusLabel" Content="{Binding Path=Campus}" DockPanel.Dock="Top"/>
+            <Label x:Name="emailLabel" Content="{Binding Path=Email}" DockPanel.Dock="Top"/>
+            <Label x:Name="curJobLabel" Content="{Binding Path=CurrentJobTitle}" DockPanel.Dock="Top"/>
+            <!--<Label x:Name="curJobLabel" DockPanel.Dock="Top" Content="{Binding Source={StaticResource researcherCurJobTitle}}"/>-->
+        </DockPanel>
+
+        <!--the area for displaying the researchers' photo-->
+        <DockPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="1" Width="92" >
+            <Image x:Name="photoImage" Source="{Binding Path=Photo}" />
+        </DockPanel>
+
+        <!--the area for displaying the researchers' details which has long lables-->
+        <DockPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
+            <Label Content="Commenced with institution:" DockPanel.Dock="Top" FontWeight="Bold"/>
+            <Label Content="Commenced current position:" DockPanel.Dock="Top" FontWeight="Bold"/>
+        </DockPanel>
+
+        <!--the area for displaying the researchers' details which has long lables-->
+        <DockPanel Grid.Row="1" Grid.Column="1">
+            <Label x:Name="comWithInstLabel" Content="{Binding Path=EarliestStart}" ContentStringFormat="{}{0:dd/MM/yyyy}" DockPanel.Dock="Top"/>
+            <Label x:Name="comCurPosLabel" Content="{Binding Path=CurrentJobStart}" ContentStringFormat="{}{0:dd/MM/yyyy}" DockPanel.Dock="Top"/>
+        </DockPanel>
+
+        <!--the area for displaying more about researchers' employment details-->
+        <StackPanel Grid.Row="2" Grid.Column="0">
+            <Label Content="Tenure:" FontWeight="Bold"/>
+            <Label Content="3-year average:" FontWeight="Bold"/>
+            <Label Content="Supervisions:" FontWeight="Bold"/>
+            <Label Content="Publication" FontWeight="Bold"/>
+            <Label Content="Performance:" FontWeight="Bold"/>
+            <Label Content="Degree:" FontWeight="Bold"/>
+            <Label Content="Supervisor:"/>
+        </StackPanel>
+        <!--the area to display details of the researcher's details-->
+        <StackPanel Grid.Row="2" Grid.Column="1" >
+            <Label x:Name="TenureLabel" Content="{Binding Path=Tenure}" ContentStringFormat="{}{0:#.0} years" />
+            <Label x:Name="yearAvgLabel" Content="{Binding Path=ThreeYearAverage, FallbackValue=' '}" ContentStringFormat="N1" />
+            <Label x:Name="supervisionsLabel" Content="{Binding Path=Supervisions, FallbackValue=' '}"/>
+            <Label x:Name="publicationLabel" Content="{Binding Path=PublicationsCount}"/>
+            <Label x:Name="performanceLabel" Content="{Binding Path=Performance, FallbackValue=' '}" ContentStringFormat="{}{0:P1}"/>
+            <Label x:Name="degreeLabel" Content="{Binding Path=Degree}"/>
+            <Label Content=""/>
+        </StackPanel>
+        <!--the area to dispaly to two buttons-->
+        <StackPanel Grid.Row="2" Grid.Column="2">
+            <Label Content=""/>
+            <Label Content=""/>
+            <Button x:Name="showNameBtn" Content="Show Name" Height="26" Margin="1" IsEnabled="False" Click="showNameBtn_Click"/>
+            <Button x:Name="cumulativeCountBtn" Content="Cumulative Count" Height="26" Margin="1" Click="cumulativeCountBtn_Click" IsEnabled="False"/>
+        </StackPanel>
+
+        <!--the area for displaying the researchers' previous positions-->
+        <uc:previousPosisionUC Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"/>
+
+        <!--the area for displaying the list of publications -->
+        <DockPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3">
+            <Frame x:Name="PublicationListFrame"/>
+        </DockPanel>
+
+        <!--the area for displaying the list of publicationDetailView -->
+        <DockPanel Grid.Row="0" Grid.Column="3" Grid.RowSpan="5">
+            <Frame x:Name="PublicationDetailFrame"/>
+        </DockPanel>
+
+    </Grid>
+</Page>

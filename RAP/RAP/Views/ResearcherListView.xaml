@@ -1,0 +1,57 @@
+﻿<Page x:Class="RAP.Views.ResearcherListView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RAP.Views"
+      xmlns:rap="clr-namespace:RAP"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+       Title="ResearcherListView" Background="{StaticResource themeBackgroud}">
+
+    <Grid>
+        <!--build a 2*1 grid to display contents-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Grid.Column="0">
+            <DockPanel Margin="2">
+                <!--elements for the level filter -->
+                <Label DockPanel.Dock="Top" Content="Show By Level:" Foreground="{StaticResource frontColor1}"/>
+                <ComboBox x:Name="ResearcherLevelFilter" ItemsSource="{Binding Source={StaticResource researcherLevels}}" DockPanel.Dock="Top" Background="{StaticResource themeBackgroud}" Margin="2" SelectionChanged="ResearcherLevelFilter_SelectionChanged"></ComboBox>
+
+                <!--elements for the name filter-->
+                <Label DockPanel.Dock="Top" Content="Filter By Name:" Foreground="{StaticResource frontColor1}"/>
+                <TextBox x:Name="ResearcherNameTextbox" DockPanel.Dock="Top" Background="{StaticResource themeBackgroud}" BorderBrush="{StaticResource frontColor1}" Foreground="{StaticResource frontColor1}" Margin="2" TextChanged="TextBox_TextChanged" ></TextBox>
+
+                <!--the listbox to display the researcher list-->
+                <ListBox x:Name="ResearcherListBox" ItemsSource="{Binding Source={StaticResource researcherList}}" Background="{StaticResource themeBackgroudLighter}" BorderThickness="0" ToolTip="" Margin="2" Foreground="{StaticResource frontColor1}" SelectionChanged="ResearcherListBox_SelectionChanged">
+                    <!--binding the data into the list box in the format of "FamiliyName, GivenName (Title)"-->
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0}, {1} ({2})">
+                                        <Binding Path="FamilyName" />
+                                        <Binding Path="GivenName" />
+                                        <Binding Path="Title" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+        </Border>
+        
+        <!--have a scrollviewer to display the ResearcherDetailView--> 
+        <ScrollViewer Grid.Column="1" Background="{StaticResource lightBackground}" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <Frame x:Name="ResearcherDetailFrame" Grid.Column="0" NavigationUIVisibility="Hidden" />
+        </ScrollViewer>
+    </Grid>
+</Page>

@@ -1,0 +1,22 @@
+﻿<Page x:Class="RAP.Views.CumulativeCountView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RAP.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="CumulativeCountView" Loaded="Page_Loaded">
+
+    <Grid>
+        <StackPanel HorizontalAlignment="Left">
+            <!--display the title of the view--> 
+            <Label Content="Cumulative Publications" FontSize="22"/>
+            <!--display the barchart of number of publications by years-->
+            <ListBox ItemsSource="{Binding}"
+                     ItemTemplate="{DynamicResource BarChartItemTemplate}" 
+                     ItemsPanel="{DynamicResource BarChartItemsPanel}"
+                     />
+        </StackPanel>
+    </Grid>
+</Page>

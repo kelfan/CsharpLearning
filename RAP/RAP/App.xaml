@@ -1,0 +1,85 @@
+﻿<Application x:Class="RAP.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:RAP"
+             xmlns:lr="clr-namespace:RAP.Research"
+             xmlns:lc="clr-namespace:RAP.Control"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <!--the main colors for the background of the application-->
+        <SolidColorBrush x:Key="themeBackgroud" Color="#144385"/>
+        <SolidColorBrush x:Key="themeBackgroudLighter" Color="#3063b2"/>
+        <SolidColorBrush x:Key="lightBackground" Color="White"/>
+        <SolidColorBrush x:Key="panelBackground" Color="#b8b9b8" Opacity="0.25"/>
+        <SolidColorBrush x:Key="frontColor1" Color="white"/>
+
+        <!--build a instance to acquire the researcher object-->
+        <lr:Researcher x:Key="researcher"/>
+        <!--build a instance to acquire the researcher levels-->
+        <ObjectDataProvider x:Key="researcherLevels"
+                            ObjectType="{x:Type sys:Enum}"
+                            MethodName="GetValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="lr:EmploymentLevel" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <!--build a instance to acquire the researcher list-->
+        <lc:ResearcherController x:Key="researcherControl"/>
+        <ObjectDataProvider x:Key="researcherList"
+                    ObjectInstance="{StaticResource researcherControl}"
+                    MethodName="LoadResearchers">
+        </ObjectDataProvider>
+
+        <!--cited from http://weblogs.thinktecture.com/cnagel/2011/06/wpf-listbox-as-bar-chart.html-->
+        <!--It is the template to display a barchart in the CumulativeCountView-->
+        <DataTemplate x:Key="BarChartItemTemplate">
+            <Border>
+                <Grid Margin="0,0,20,0">
+                    <TextBlock Margin="0,0,-20,0" FontWeight="Bold" 
+                        HorizontalAlignment="Right" VerticalAlignment="Center" 
+                       Text="{Binding Path=year}" >
+                        <TextBlock.LayoutTransform>
+                            <TransformGroup>
+                                <RotateTransform Angle="90" />
+                                <ScaleTransform ScaleX="1" ScaleY="-1" />
+                            </TransformGroup>
+                        </TextBlock.LayoutTransform>
+                    </TextBlock>
+                    <Rectangle Fill="Blue" StrokeThickness="0" 
+                               Height="40" Width="{Binding Path=height}" Margin="3" 
+                               HorizontalAlignment="Right" VerticalAlignment="Top" >
+                        <Rectangle.LayoutTransform>
+                            <ScaleTransform ScaleX="20" />
+                        </Rectangle.LayoutTransform>
+                    </Rectangle>
+                    <TextBlock Margin="0,0,10,0" FontWeight="Bold" Foreground="White"
+                       HorizontalAlignment="Right" VerticalAlignment="Center" 
+                       Text="{Binding Path=count}" >
+                        <TextBlock.LayoutTransform>
+                            <TransformGroup>
+                                <RotateTransform Angle="90" />
+                                <ScaleTransform ScaleX="1" ScaleY="-1" />
+                            </TransformGroup>
+                        </TextBlock.LayoutTransform>
+                    </TextBlock>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <!--cited from http://weblogs.thinktecture.com/cnagel/2011/06/wpf-listbox-as-bar-chart.html-->
+        <!--It is template to link to the items in the cumulativeCountView-->
+        <ItemsPanelTemplate x:Key="BarChartItemsPanel">
+            <VirtualizingStackPanel IsItemsHost="True">
+                <VirtualizingStackPanel.LayoutTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="-90" />
+                        <ScaleTransform ScaleX="-1" ScaleY="1" />
+                    </TransformGroup>
+                </VirtualizingStackPanel.LayoutTransform>
+            </VirtualizingStackPanel>
+        </ItemsPanelTemplate>
+
+    </Application.Resources>
+</Application>

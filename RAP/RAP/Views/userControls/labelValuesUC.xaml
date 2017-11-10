@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="RAP.Views.userControls.labelValuesUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RAP.Views.userControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="300"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <!--This is the user control to display a label and value-->
+    <Grid>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <!--this will display a label--> 
+            <Label x:Name="ucLabel"/>
+            <!--this will bind the detail related to the label-->
+            <TextBlock x:Name="ucTextBlock" TextWrapping="WrapWithOverflow" Text="{Binding Path=ucTextboxValue, ElementName=ucTextBlock}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

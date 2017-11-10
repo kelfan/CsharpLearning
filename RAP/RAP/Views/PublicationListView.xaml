@@ -1,0 +1,56 @@
+﻿<Page x:Class="RAP.Views.PublicationListView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RAP.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="400"
+      Title="PublicationListView" Height="auto" Width="auto">
+
+    <Grid>
+        <!--have a tow row grid-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!--display the title, options and buttons-->
+        <DockPanel>
+            <!--display the invert button-->
+            <Button x:Name="invertBtn" Content="invert" Margin="5" Width="50"  DockPanel.Dock="Right" Click="invertBtn_Click" IsEnabled="False"/>
+            <!--display the search button-->
+            <Button x:Name="searchBtn" Content="search" Margin="5" Width="50"  DockPanel.Dock="Right" Click="searchBtn_Click" IsEnabled="False"/>
+            <!--display the combobox to diplay a list of years-->
+            <ComboBox x:Name="toCombobox" Text="End year" Margin="5" DockPanel.Dock="Right" Width="65" SelectionChanged="toCombobox_SelectionChanged"/>
+            <!--display the label of to--> 
+            <Label Content="To" DockPanel.Dock="Right" />
+            <!--display the combobox to diplay a list of years-->
+            <ComboBox x:Name="fromCombobox" Text="Start year" Margin="5" DockPanel.Dock="Right" Width="65" SelectionChanged="fromCombobox_SelectionChanged"/>
+            <!--diplay the lable of to-->
+            <Label Content="From" DockPanel.Dock="Right" />
+            <!--display the title of list of publications-->
+            <Label Content="List of Publications" DockPanel.Dock="Left" MinWidth="110" FontWeight="Bold"/>
+        </DockPanel>
+        <!--diplay the contents of list of students-->
+        <Border Grid.Row="1">
+            <ListView x:Name="publicationListView" Margin="3" SelectionChanged="ListView_SelectionChanged">
+                <!--have a listbox to display a list of students-->
+                <ListBox.ItemTemplate>
+                    <!--display the students' detail in the format of "year title"-->
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="Year" />
+                                    <Binding Path="Title" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListView>
+        </Border>
+
+    </Grid>
+</Page>
