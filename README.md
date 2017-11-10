@@ -379,6 +379,26 @@ XAML
 </Window>
 ```
 
+## delegate
+
+2.2.1 Declaring a delegate Inside the namespace declaration but outside the Program class declaration add the following:
+`public delegate Employee ManageWorker(int id); `
+This defines a new delegate type that is compatible with any method whose return type is Employee and that takes in a single integer parameter. It doesn’t specify what the behaviour of the method must be, only what parameters and return type it must have.
+
+2.2.2 Attaching delegates variables to actual methods Now that the ManageWorker delegate has been defined, add the following declarations inside Main():
+`Action doSomething; ManageWorker manage;`
+Action is an existing delegate in the System namespace. It is compatible with any method that has no return value (its return type is void) and that takes no parameters.
+Adapt the code in Main() that called methods on the Boss object directly to be more like the following (which assumes that your Boss object is called boss):
+```
+doSomething = boss.Display;
+manage = boss.Use;
+
+doSomething();
+Console.WriteLine("Dealing with {0}", manage(1)); #if 1 is an ID
+doSomething();
+``` 
+Note that there are no parentheses after the method names in the two assignments; these statements assign those methods to the variables doSomething and manage, but do not execute the methods.
+
 # Resources
 - [WPF Grid: Master-Detail Support](https://www.youtube.com/watch?v=Sh_VVEBFk50): How to draw table from a database
 - [C# WPF MVVM Eden Cerberus](https://www.youtube.com/results?search_query=wpf+information+detail)
