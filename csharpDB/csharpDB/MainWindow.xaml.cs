@@ -81,6 +81,7 @@ namespace csharpDB
                 itemlist.Items.Refresh();
                 int lastId = cells.Count() - 1;
                 currentCell = cells[lastId];
+                Data.FreData.saveData(cells);
                 itemlist.Items.Refresh();
             }
         }
@@ -88,6 +89,8 @@ namespace csharpDB
         private void deleteBtn_Click(object sender, RoutedEventArgs e)
         {
             cells.Remove(currentCell);
+            cells = control.ListHandler.sortCells(cells);
+                Data.FreData.saveData(cells);
             itemlist.Items.Refresh();
         }
 
@@ -109,12 +112,15 @@ namespace csharpDB
             string titleTxt = titleInput.Text;
             string contentTxt = contentInput.Text;
             int idx = cells.IndexOf(currentCell);
-            if (titleTxt != "" && idx > 0)
+            if (titleTxt != "" && idx >= 0)
             {
                 cells[idx].title = titleTxt;
                 cells[idx].content = contentTxt;
                 cells[idx].updated = System.DateTime.Now;
+                cells = control.ListHandler.sortCells(cells);
+                Data.FreData.saveData(cells);
                 itemlist.Items.Refresh();
+                System.Windows.MessageBox.Show("updated.");
             }
         }
 
@@ -128,22 +134,17 @@ namespace csharpDB
         private void searchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             string searchTxt = searchBox.Text.ToLower();
-            string[] searchTerms = searchTxt.Split(' ', '\t');
-            if(searchTerms.Count() == 1)
+            string[] searchTerms = searchTxt.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries);
+            selectedCells = cells;
+
+            foreach (string term in searchTerms)
             {
-                selectedCells = cells;
+                var selected = from Cell c in selectedCells
+                               where c.title.ToLower().Contains(term)
+                               select c;
+                selectedCells = (List<Cell>)selected.ToList();
             }
-            foreach(string term in searchTerms)
-            {
-                if(term != "")
-                {
-                    var selected = from Cell c in selectedCells
-                                   where c.title.ToLower().Contains(searchTxt)
-                                   select c;
-                    selectedCells = (List<Cell>)selected.ToList();
-                }
-            }
-            
+            selectedCells = control.ListHandler.sortCells(selectedCells);
             itemlist.ItemsSource = selectedCells;
             itemlist.Items.Refresh();
         }
