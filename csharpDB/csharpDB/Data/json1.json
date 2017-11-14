@@ -1,0 +1,8 @@
+﻿[
+  {
+    "title": "c# - Get DateTime.Now with milliseconds precision - Stack Overflow",
+    "content": "If your question is actually just around converting a DateTime to a string with millisecond precision, I'd suggest using: string timestamp = DateTime.UtcNow.ToString(\"yyyy-MM-dd HH:mm:ss.fff\", CultureInfo.InvariantCulture);Apr 16, 2013",
+    "created": "2017-11-08T15:49:56.2749995+11:00",
+    "updated": "0001-01-01T00:00:00"
+  }
+]
